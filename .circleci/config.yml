@@ -1,0 +1,99 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+    - image: finalgene/composer:latest
+
+    working_directory: /tmp/project
+
+    steps:
+    - checkout
+
+    -
+      restore_cache:
+        keys:
+        - v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}
+
+    -
+      run:
+        name: Install composer dependencies
+        command: composer install --no-interaction --optimize-autoloader --prefer-dist
+
+    -
+      save_cache:
+        paths:
+        - vendor
+        key: v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}
+
+    -
+      persist_to_workspace:
+        root: /tmp/project
+        paths:
+        - vendor
+
+  code-style-check:
+    docker:
+    - image: finalgene/phpcs:latest
+
+    working_directory: /tmp/project
+
+    steps:
+    - checkout
+
+    -
+      run:
+        name: Execute code style checks
+        command: phpcs -p
+
+  unit-tests:
+    docker:
+    - image: finalgene/php-cli:7.2-xdebug
+
+    working_directory: /tmp/project
+
+    steps:
+    - checkout
+
+    -
+      attach_workspace:
+        at: /tmp/project
+
+    -
+      run:
+        name: Download phpunit and codacy coverage
+        command: |
+          if [ ! -d .tools ]; then mkdir .tools; fi
+          curl --location --show-error --silent --output .tools/phpunit.phar https://phar.phpunit.de/phpunit-7.phar
+          curl --location --show-error --silent --output .tools/codacy-coverage.phar https://github.com/codacy/php-codacy-coverage/releases/download/1.4.2/codacy-coverage.phar
+          chmod +x .tools/*
+
+    -
+      run:
+        name: Execute unit tests
+        command: php -d zend_extension=xdebug.so .tools/phpunit.phar --coverage-text --coverage-clover=build/logs/coverage.clover.xml --log-junit=.build/test-results/phpunit/results.xml
+
+    -
+      run:
+        name: Upload coverage data
+        command: .tools/codacy-coverage.phar clover build/logs/coverage.clover.xml
+
+    -
+      store_test_results:
+        path: .build/test-results
+
+workflows:
+  version: 2
+  build:
+    jobs:
+    - build
+
+    -
+      code-style-check:
+        requires:
+        - build
+
+    -
+      unit-tests:
+        requires:
+        - build
