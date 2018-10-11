@@ -6,23 +6,23 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+-   Nothing.
 
 ### Changed
 
-- Nothing.
+-   Nothing.
 
 ### Deprecated
 
-- Nothing.
+-   Nothing.
 
 ### Removed
 
-- Nothing.
+-   Nothing.
 
 ### Fixed
 
-- Nothing.
+-   Nothing.
 
 ## 0.1.0 - 2018-10-10
 
@@ -30,16 +30,16 @@ Initial Release.
 
 ### Added
 
-- Everything.
+-   Everything.
 
 ### Deprecated
 
-- Nothing.
+-   Nothing.
 
 ### Removed
 
-- Nothing.
+-   Nothing.
 
 ### Fixed
 
-- Nothing.
+-   Nothing.
