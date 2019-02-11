@@ -44,21 +44,9 @@
     "config": {
         "sort-packages": true
     },
-    "scripts": {
-        "test": "@php .tools/phpunit/vendor/phpunit/phpunit/phpunit",
-        "check-style": "@php .tools/squizlabs/vendor/squizlabs/php_codesniffer/bin/phpcs -p",
-        "fix-style": "@php .tools/squizlabs/vendor/squizlabs/php_codesniffer/bin/phpcbf -p",
-        "install-tools": "@composer bin all install --ansi"
-    },
-    "scripts-descriptions": {
-        "test": "Execute unit tests",
-        "check-style": "Check code style for issues",
-        "fix-style": "Fix code style issues",
-        "install-tools": "Install development related tools"
-    },
     "extra": {
         "bamarni-bin": {
-            "target-directory": ".tools"
+            "target-directory": "tools"
         },
         "branch-alias": {
             "dev-master": "0.1.x-dev",
@@ -67,15 +55,18 @@
     },
     "archive": {
         "exclude": [
-            ".circleci",
+            ".circleci/",
+            ".github/",
+            "tests/",
+            "tools/",
             ".editorconfig",
-            ".github",
             ".gitattributes",
             ".gitignore",
             "composer.lock",
+            "Makefile",
             "phpcs.xml.dist",
-            "phpunit.xml.dist",
-            "tests"
+            "phpstan.neon.dist",
+            "phpunit.xml.dist"
         ]
     }
 }

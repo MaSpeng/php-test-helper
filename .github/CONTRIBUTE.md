@@ -6,69 +6,41 @@ All new features **must** include documentation before they may be accepted and 
 
 ## Set Up
 
-1.  This project uses Docker
-
--   macOS: [Download Docker for Mac](https://www.docker.com/docker-mac)
--   Windows: [Download Docker for Windows](https://www.docker.com/docker-windows)
-
-2.  Install Docker and [Docker Toolbox](https://www.docker.com/toolbox)
+1. This project uses Docker
+  - macOS: [Download Docker for Mac](https://www.docker.com/docker-mac)
+  - Windows: [Download Docker for Windows](https://www.docker.com/docker-windows)
+2. Install Docker and [Docker Toolbox](https://www.docker.com/toolbox)
 
 ## Running Tests
 
 To run tests:
 
--   Clone this repository:
+- Clone this repository:
 
 ```bash
 $ git clone git@github.com:maspeng/php-test-helper.git
 ```
 
--   Or via HTTPS&#x3A;
+- Or via HTTPS
 
 ```bash
 $ git clone https://github.com/maspeng/php-test-helper.git
 ```
 
--   Install dependencies via composer:
+- Install development dependencies via make:
 
 ```bash
-$ docker run \
-    --rm \
-    --tty \
-    --user $(id -u):$(id -g) \
-    --volume /private/etc/passwd:/etc/passwd:ro \
-    --volume /private/etc/group:/etc/group:ro \
-    --volume "$(pwd)":/app \
-    --volume /tmp/.composer:/tmp \
-    composer install
+$ make install
 ```
 
--   Install development dependencies via make:
+## Running Code Analysis
+
+This component uses [phpstan](https://github.com/phpstan/phpstan) for code analysis, and provides configuration for our selected checks.
+
+To run analyses:
 
 ```bash
-$ docker run \
-    --rm \
-    --tty \
-    --user $(id -u):$(id -g) \
-    --volume /private/etc/passwd:/etc/passwd:ro \
-    --volume /private/etc/group:/etc/group:ro \
-    --volume "$(pwd)":/app \
-    --volume /tmp/.composer:/tmp \
-    composer run-scrit install-tools
-```
-
--   Run the tests via `phpunit` and the provided PHPUnit config, like in this example:
-
-```bash
-$ docker run \
-    --rm \
-    --tty \
-    --user $(id -u):$(id -g) \
-    --volume /private/etc/passwd:/etc/passwd:ro \
-    --volume /private/etc/group:/etc/group:ro \
-    --volume "$(pwd)":/app \
-    --volume /tmp/.composer:/tmp \
-    composer run-script test
+$ make analysis
 ```
 
 ## Running Coding Standards Checks
@@ -78,50 +50,44 @@ This component uses [phpcs](https://github.com/squizlabs/PHP_CodeSniffer) for co
 To run checks only:
 
 ```bash
-$ docker run \
-    --rm \
-    --tty \
-    --user $(id -u):$(id -g) \
-    --volume /private/etc/passwd:/etc/passwd:ro \
-    --volume /private/etc/group:/etc/group:ro \
-    --volume "$(pwd)":/app \
-    --volume ~/.composer:/cache/.composer \
-    composer run-script check-style
+$ make style-check
 ```
 
 `phpcs` also installs a tool named `phpcbf` which can attempt to fix problems for you:
 
 ```bash
-$ docker run \
-    --rm \
-    --tty \
-    --user $(id -u):$(id -g) \
-    --volume /private/etc/passwd:/etc/passwd:ro \
-    --volume /private/etc/group:/etc/group:ro \
-    --volume "$(pwd)":/app \
-    --volume ~/.composer:/cache/.composer \
-    composer run-script fix-style
+$ make stlye-fix
 ```
 
 If you allow phpcbf to fix CS issues, please re-run the tests to ensure they pass, and make sure you add and commit the changes after verification.
+
+## Running Unit Tests
+
+This component uses [phpunit](https://phpunit.de/) for unit tests and provides configuration for the tests.
+
+To run tests:
+
+```bash
+$ make test
+```
 
 ## Recommended Workflow for Contributions
 
 Your first step is to establish a public repository from which we can pull your work into the master repository. We recommend using [GitHub](https://github.com), as that is where the component is already hosted.
 
-1.  Setup a [GitHub account](http://github.com/), if you haven't yet
-2.  Fork the [repository](http://github.com/maspeng/php-test-helper)
-3.  Clone the canonical repository locally and enter it.
+1. Setup a [GitHub account](http://github.com/), if you haven't yet
+2. Fork the [repository](http://github.com/maspeng/php-test-helper)
+3. Clone the canonical repository locally and enter it.
 
 ```bash
 $ git clone git://github.com/maspeng/php-test-helper.git
 $ cd php-test-helper
 ```
 
-4.  Add a remote to your fork; substitute your GitHub username in the command below.
+4. Add a remote to your fork; substitute your GitHub username in the command below.
 
 ```bash
-$ git remote add {username} git@github.com:{username}/php-phar-loader.git
+$ git remote add {username} git@github.com:{username}/php-test-helper.git
 $ git fetch {username}
 ```
 
@@ -145,11 +111,11 @@ We recommend you do each new feature or bugfix in a new branch. This simplifies 
 
 A typical workflow will then consist of the following:
 
-1.  Create a new local branch based off either your master or develop branch.
-2.  Switch to your new local branch. (This step can be combined with the previous step with the use of `git checkout -b`.)
-3.  Do some work, commit, repeat as necessary.
-4.  Push the local branch to your remote repository.
-5.  Send a pull request.
+1. Create a new local branch based off either your master or develop branch.
+2. Switch to your new local branch. (This step can be combined with the previous step with the use of `git checkout -b`.)
+3. Do some work, commit, repeat as necessary.
+4. Push the local branch to your remote repository.
+5. Send a pull request.
 
 The mechanics of this process are actually quite trivial. Below, we will create a branch for fixing an issue in the tracker.
 
@@ -173,7 +139,7 @@ Delta compression using up to 2 threads.
 Compression objects: 100% (10/10), done.
 Writing objects: 100% (12/12), 1.24KiB, done.
 Total 15 (delta 12), reused 0 (delta 0)
-To ssh://git@github.com/{username}/php-phar-loader.git
+To ssh://git@github.com/{username}/php-test-helper.git
    b5442aa..f3g6a3fg  HEAD -> master
 ```
 
@@ -187,8 +153,8 @@ If using your own repository - or even if using GitHub - you can use `git format
 
 Which branch should you issue a pull request against?
 
--   For fixes against the stable release, issue the pull request against the "master" branch.
--   For new features, or fixes that introduce new elements to the public API (such as new public methods or properties), issue the pull request against the "develop" branch.
+- For fixes against the stable release, issue the pull request against the "master" branch.
+- For new features, or fixes that introduce new elements to the public API (such as new public methods or properties), issue the pull request against the "develop" branch.
 
 ### Branch Cleanup
 
@@ -196,13 +162,13 @@ As you might imagine, if you are a frequent contributor, you'll start to get a t
 
 Once you know that your changes have been accepted to the master repository, we suggest doing some cleanup of these branches.
 
--   Local branch cleanup
+- Local branch cleanup
 
 ```bash
 $ git branch -d <branchname>
 ```
 
--   Remote branch removal
+- Remote branch removal
 
 ```bash
 $ git push {username} :<branchname>

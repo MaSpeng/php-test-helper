@@ -1,6 +1,6 @@
 # Bug
 
--   [ ] I was not able to find an [open](https://github.com/maspeng/php-test-helper/issues?q=is%3Aopen) or [closed](https://github.com/maspeng/php-test-helper/issues?q=is%3Aclosed) issue matching what I'm seeing.
+- [ ] I was not able to find an [open](https://github.com/maspeng/php-test-helper/issues?q=is%3Aopen) or [closed](https://github.com/maspeng/php-test-helper/issues?q=is%3Aclosed) issue matching what I'm seeing.
 
 Provide a narrative description of what you are trying to accomplish.
 

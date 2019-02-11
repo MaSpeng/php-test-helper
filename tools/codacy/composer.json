@@ -1,0 +1,11 @@
+{
+    "require-dev": {
+        "codacy/coverage": "^1.4"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    }
+}

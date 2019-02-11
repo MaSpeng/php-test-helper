@@ -1,99 +1,107 @@
-version: 2
+version: 2.1
 
 jobs:
-  build:
+  prepare:
     docker:
-    - image: finalgene/composer:latest
+      - image: finalgene/composer
 
-    working_directory: /tmp/project
+    working_directory: ~/project
 
     steps:
-    - checkout
+      - checkout
 
-    -
-      restore_cache:
-        keys:
-        - v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}
+      - run:
+          name: Validating composer file
+          command: composer validate --no-check-all --no-check-publish
 
-    -
-      run:
-        name: Install composer dependencies
-        command: composer install --no-interaction --optimize-autoloader --prefer-dist
+      - run:
+          name: Installing dependencies
+          command: composer install --no-interaction
 
-    -
-      save_cache:
-        paths:
-        - vendor
-        key: v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}
+      - run:
+          name: Installing tools
+          command: composer bin all install --no-interaction
 
-    -
-      persist_to_workspace:
-        root: /tmp/project
-        paths:
-        - vendor
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - vendor
+            - tools/codacy/vendor/
+            - tools/phpstan/vendor/
+            - tools/phpunit/vendor/
+            - tools/squizlabs/vendor/
 
-  code-style-check:
+  analysis:
     docker:
-    - image: finalgene/phpcs:latest
+      - image: finalgene/php-cli:7.2
 
-    working_directory: /tmp/project
+    working_directory: ~/project
 
     steps:
-    - checkout
+      - checkout
 
-    -
-      run:
-        name: Execute code style checks
-        command: phpcs -p
+      - attach_workspace:
+          at: ~/project
 
-  unit-tests:
+      - run:
+          name: Anlaysing code
+          command: vendor/bin/phpstan analyze src tests
+
+  style-check:
     docker:
-    - image: finalgene/php-cli:7.2-xdebug
+      - image: finalgene/php-cli:7.2
 
-    working_directory: /tmp/project
+    working_directory: ~/project
 
     steps:
-    - checkout
+      - checkout
 
-    -
-      attach_workspace:
-        at: /tmp/project
+      - attach_workspace:
+          at: ~/project
 
-    -
-      run:
-        name: Download phpunit and codacy coverage
-        command: |
-          if [ ! -d .tools ]; then mkdir .tools; fi
-          curl --location --show-error --silent --output .tools/phpunit.phar https://phar.phpunit.de/phpunit-7.phar
-          curl --location --show-error --silent --output .tools/codacy-coverage.phar https://github.com/codacy/php-codacy-coverage/releases/download/1.4.2/codacy-coverage.phar
-          chmod +x .tools/*
+      - run:
+          name: Checking code style
+          command: vendor/bin/phpcs -p
 
-    -
-      run:
-        name: Execute unit tests
-        command: php -d zend_extension=xdebug.so .tools/phpunit.phar --coverage-text --coverage-clover=build/logs/coverage.clover.xml --log-junit=.build/test-results/phpunit/results.xml
+  phpunit:
+    docker:
+      - image: finalgene/php-cli:7.2-xdebug
 
-    -
-      run:
-        name: Upload coverage data
-        command: .tools/codacy-coverage.phar clover build/logs/coverage.clover.xml
+    working_directory: ~/project
 
-    -
-      store_test_results:
-        path: .build/test-results
+    steps:
+      - checkout
+
+      - attach_workspace:
+          at: ~/project
+
+      - run:
+          name: Executing unit tests
+          command: |
+            php -d zend_extension=xdebug.so vendor/bin/phpunit \
+              --coverage-text \
+              --coverage-clover=build/logs/coverage.clover.xml \
+              --log-junit=.build/test-results/phpunit/results.xml
+      - run:
+          name: Uploading coverage data
+          command: vendor/bin/codacycoverage clover build/logs/coverage.clover.xml
+
+      - store_test_results:
+          path: .build/test-results
 
 workflows:
-  version: 2
-  build:
+  analyse-test:
     jobs:
-    - build
+      - prepare
 
-    -
-      code-style-check:
-        requires:
-        - build
+      - analysis:
+          requires:
+            - prepare
 
-    -
-      unit-tests:
-        requires:
-        - build
+      - style-check:
+          requires:
+            - prepare
+
+      - phpunit:
+          requires:
+            - prepare
