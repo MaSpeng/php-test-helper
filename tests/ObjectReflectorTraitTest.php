@@ -254,11 +254,11 @@ class ObjectReflectorTraitTest extends TestCase
      * Test get class name should throw exception
      *
      * @return void
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testGetClassNameShouldThrowException(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $objectReflector = $this->getMockForTrait(ObjectReflectorTrait::class);
 
         $getClassMethod = new \ReflectionMethod(ObjectReflectorTrait::class, 'getClassName');
