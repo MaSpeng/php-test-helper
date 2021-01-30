@@ -4,8 +4,8 @@ This library has the target to simplify various tasks during test development.
 
 [![Minimum PHP Version](https://img.shields.io/badge/PHP-%3E%3D7.2.0%20%7C%20%3E%3D8.0.0-blue.svg)](https://php.net/)
 [![CircleCI](https://circleci.com/gh/MaSpeng/php-test-helper.svg?style=svg)](https://circleci.com/gh/MaSpeng/php-test-helper)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/75aac3875a45420e9cdb2b4935af872f)](https://www.codacy.com/app/marco.spengler/php-test-helper?utm_source=github.com&utm_medium=referral&utm_content=MaSpeng/php-test-helper&utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/75aac3875a45420e9cdb2b4935af872f)](https://www.codacy.com/app/marco.spengler/php-test-helper?utm_source=github.com&utm_medium=referral&utm_content=MaSpeng/php-test-helper&utm_campaign=Badge_Coverage)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/86e80a598f594d3c8f5e2db423021869)](https://www.codacy.com/gh/MaSpeng/php-test-helper/dashboard?utm_source=github.com&utm_medium=referral&utm_content=MaSpeng/php-test-helper&utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/86e80a598f594d3c8f5e2db423021869)](https://www.codacy.com/gh/MaSpeng/php-test-helper/dashboard?utm_source=github.com&utm_medium=referral&utm_content=MaSpeng/php-test-helper&utm_campaign=Badge_Coverage)
 
 ## Installation
 
