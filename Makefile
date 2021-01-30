@@ -6,14 +6,11 @@ install:
 	@echo "Installing dependencies and development tools"
 	@docker run \
 		--rm \
-		--volume $(shell pwd):/app \
-		--entrypoint /bin/sh \
-		finalgene/composer -c " \
+		--volume "${PWD}:/app" \
+		--workdir /app \
+		composer:2 sh -c " \
 			composer install && \
-			composer bin codacy install && \
-			composer bin phpunit install && \
-			composer bin phpstan install && \
-			composer bin squizlabs install \
+			composer bin all install \
 	"
 
 .PHONY: analysis
@@ -21,67 +18,57 @@ analysis:
 	@echo "Analyse code"
 	@docker run \
 		--rm \
-		--volume $(shell pwd):/app \
-		finalgene/php-cli:7.2-xdebug php \
-			vendor/bin/phpstan --version
-	@docker run \
-		--rm \
-		--volume $(shell pwd):/app \
-		finalgene/php-cli:7.2-xdebug php \
-			vendor/bin/phpstan analyze src tests
+		--volume "${PWD}:/app" \
+		--workdir /app \
+		php:8.0-cli-alpine sh -c " \
+			tools/phpstan/vendor/bin/phpstan --version && \
+			tools/phpstan/vendor/bin/phpstan analyze \
+		"
 
 .PHONY: style-check
-check-style:
+style-check:
 	@echo "Checking code style"
 	@docker run \
 		--rm \
-		--volume $(shell pwd):/app \
-		finalgene/php-cli:7.2-xdebug php \
-			vendor/bin/phpcs --version
-	@docker run \
-		--rm \
-		--volume $(shell pwd):/app \
-		finalgene/php-cli:7.2-xdebug php \
-			vendor/bin/phpcs -p
+		--volume "${PWD}:/app" \
+		--workdir /app \
+		php:8.0-cli-alpine sh -c " \
+			tools/squizlabs/vendor/bin/phpcs --version && \
+			tools/squizlabs/vendor/bin/phpcs -p \
+		"
 
 .PHONY: style-fix
-fix-style:
+style-fix:
 	@echo "Fixing code style"
 	@docker run \
 		--rm \
-		--volume $(shell pwd):/app \
-		finalgene/php-cli:7.2-xdebug php \
-			vendor/bin/phpcbf --version
-	@docker run \
-		--rm \
-		--volume $(shell pwd):/app \
-		finalgene/php-cli:7.2-xdebug php \
-			vendor/bin/phpcbf -p
+		--volume "${PWD}:/app" \
+		--workdir /app \
+		php:8.0-cli-alpine sh -c " \
+			tools/squizlabs/vendor/bin/phpcbf --version && \
+			tools/squizlabs/vendor/bin/phpcbf -p \
+		"
 
 .PHONY: test
 test:
 	@echo "Running tests"
 	@docker run \
 		--rm \
-		--volume $(shell pwd):/app \
-		finalgene/php-cli:7.2-xdebug php \
-			vendor/bin/phpunit --version
-	@docker run \
-		--rm \
-		--volume $(shell pwd):/app \
-		finalgene/php-cli:7.2-xdebug php \
-			vendor/bin/phpunit
+		--volume "${PWD}:/app" \
+		--workdir /app \
+		php:8.0-cli-alpine sh -c " \
+			tools/phpunit/vendor/bin/phpunit --version && \
+			tools/phpunit/vendor/bin/phpunit \
+		"
 
 .PHONY: test-with-coverage
 test-with-coverage:
 	@echo "Running tests with code coverage"
 	@docker run \
 		--rm \
-		--volume $(shell pwd):/app \
-		finalgene/php-cli:7.2-xdebug php \
-			vendor/bin/phpunit --version
-	@docker run \
-		--rm \
-		--volume $(shell pwd):/app \
-		finalgene/php-cli:7.2-xdebug php \
-			-dzend_extension=xdebug.so vendor/bin/phpunit --coverage-text
+		--volume "${PWD}:/app" \
+		--workdir /app \
+		php:8.0-cli-alpine sh -c " \
+			tools/phpunit/vendor/bin/phpunit --version && \
+			tools/phpunit/vendor/bin/phpunit --coverage-text \
+		"
