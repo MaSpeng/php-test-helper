@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   prepare:
     docker:
-      - image: finalgene/composer
+      - image: composer:2
 
     working_directory: ~/project
 
@@ -26,14 +26,13 @@ jobs:
           root: ~/project
           paths:
             - vendor
-            - tools/codacy/vendor/
             - tools/phpstan/vendor/
             - tools/phpunit/vendor/
             - tools/squizlabs/vendor/
 
   analysis:
     docker:
-      - image: finalgene/php-cli:7.2
+      - image: circleci/php:8.0-cli
 
     working_directory: ~/project
 
@@ -45,11 +44,11 @@ jobs:
 
       - run:
           name: Anlaysing code
-          command: vendor/bin/phpstan analyze src tests
+          command: tools/phpstan/vendor/bin/phpstan analyze
 
   style-check:
     docker:
-      - image: finalgene/php-cli:7.2
+      - image: circleci/php:8.0-cli
 
     working_directory: ~/project
 
@@ -61,11 +60,11 @@ jobs:
 
       - run:
           name: Checking code style
-          command: vendor/bin/phpcs -p
+          command: tools/squizlabs/vendor/bin/phpcs -p
 
   phpunit:
     docker:
-      - image: finalgene/php-cli:7.2-xdebug
+      - image: circleci/php:8.0-cli
 
     working_directory: ~/project
 
@@ -78,16 +77,37 @@ jobs:
       - run:
           name: Executing unit tests
           command: |
-            php -d zend_extension=xdebug.so vendor/bin/phpunit \
+            php tools/phpunit/vendor/bin/phpunit \
               --coverage-text \
               --coverage-clover=build/logs/coverage.clover.xml \
-              --log-junit=.build/test-results/phpunit/results.xml
-      - run:
-          name: Uploading coverage data
-          command: vendor/bin/codacycoverage clover build/logs/coverage.clover.xml
+              --log-junit=build/test-results/phpunit/results.xml
+
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - build
 
       - store_test_results:
-          path: .build/test-results
+          path: build/test-results
+
+codacy-coverage-report:
+  docker:
+    - image: circleci/openjdk:8-jdk
+
+  working_directory: ~/project
+
+  steps:
+    - checkout
+
+    - attach_workspace:
+        at: ~/project
+
+    - coverage-reporter/send_report:
+        coverage-reports: build/logs/coverage.clover.xml
+        project-token: $CODACY_PROJECT_TOKEN
+
+orbs:
+  coverage-reporter: codacy/coverage-reporter@11.9.0
 
 workflows:
   analyse-test:
