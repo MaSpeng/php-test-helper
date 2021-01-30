@@ -1,9 +1,10 @@
 includes:
-    - "tools/phpstan/vendor/phpstan/phpstan-phpunit/extension.neon"
-    - "tools/phpstan/vendor/jangregor/phpstan-prophecy/src/extension.neon"
+    - tools/phpstan/vendor/phpstan/phpstan-phpunit/extension.neon
+    - tools/phpstan/vendor/phpstan/phpstan-phpunit/rules.neon
+    - tools/phpstan/vendor/jangregor/phpstan-prophecy/extension.neon
 
 parameters:
-    level: 7
+    level: max
 
     ignoreErrors:
         - '#Call to an undefined static method PHPUnit\\Framework\\MockObject\\MockObject::invokeMethod\(\)#'
@@ -12,3 +13,10 @@ parameters:
         - '#Call to an undefined static method PHPUnit\\Framework\\MockObject\\MockObject::getPropertyValue\(\)#'
         - '#Call to an undefined static method PHPUnit\\Framework\\MockObject\\MockObject::setPropertyValue\(\)#'
         - '#Call to an undefined static method PHPUnit\\Framework\\MockObject\\MockObject::setPropertyValues\(\)#'
+
+    paths:
+        - src
+        - tests
+
+    bootstrapFiles:
+        - tools/phpunit/vendor/autoload.php
