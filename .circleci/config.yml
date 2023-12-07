@@ -89,6 +89,8 @@ jobs:
       - run:
           name: Executing unit tests
           command: |
+            sudo pecl install pcov
+            sudo docker-php-ext-enable pcov
             php tools/phpunit/vendor/bin/phpunit \
               --coverage-text \
               --coverage-clover=build/logs/coverage.clover.xml \
