@@ -25,18 +25,6 @@ analysis:
 			tools/phpstan/vendor/bin/phpstan analyze \
 		"
 
-.PHONY: style-check
-style-check:
-	@echo "Checking code style"
-	@docker run \
-		--rm \
-		--volume "${PWD}:/app" \
-		--workdir /app \
-		php:8.1-cli-alpine sh -c " \
-			tools/squizlabs/vendor/bin/phpcs --version && \
-			tools/squizlabs/vendor/bin/phpcs -p \
-		"
-
 .PHONY: style-fix
 style-fix:
 	@echo "Fixing code style"
@@ -45,8 +33,8 @@ style-fix:
 		--volume "${PWD}:/app" \
 		--workdir /app \
 		php:8.1-cli-alpine sh -c " \
-			tools/squizlabs/vendor/bin/phpcbf --version && \
-			tools/squizlabs/vendor/bin/phpcbf -p \
+			tools/php-cs-fixer/vendor/bin/php-cs-fixer --version && \
+			tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --ansi \
 		"
 
 .PHONY: test

@@ -26,9 +26,9 @@ jobs:
           root: ~/project
           paths:
             - vendor
+            - tools/php-cs-fixer/vendor/
             - tools/phpstan/vendor/
             - tools/phpunit/vendor/
-            - tools/squizlabs/vendor/
 
   analysis:
     docker:
@@ -44,7 +44,7 @@ jobs:
 
       - run:
           name: Anlaysing code
-          command: tools/phpstan/vendor/bin/phpstan analyze
+          command: tools/phpstan/vendor/bin/phpstan analyze --ansi
 
   style-check:
     docker:
@@ -60,7 +60,7 @@ jobs:
 
       - run:
           name: Checking code style
-          command: tools/squizlabs/vendor/bin/phpcs -p
+          command: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff --verbose --ansi
 
   phpunit:
     docker:

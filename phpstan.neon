@@ -1,8 +1,3 @@
-includes:
-    - tools/phpstan/vendor/phpstan/phpstan-phpunit/extension.neon
-    - tools/phpstan/vendor/phpstan/phpstan-phpunit/rules.neon
-    - tools/phpstan/vendor/jangregor/phpstan-prophecy/extension.neon
-
 parameters:
     level: max
 
