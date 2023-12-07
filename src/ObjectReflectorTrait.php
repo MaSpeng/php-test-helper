@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of the PHP test helper project.
  *
@@ -7,26 +10,19 @@
 
 namespace MaSpeng\TestHelper;
 
-/**
- * Object reflector trait
- *
- * @package MaSpeng\TestHelper
- */
+use InvalidArgumentException;
+use ReflectionException;
+use ReflectionMethod;
+use ReflectionProperty;
+
 trait ObjectReflectorTrait
 {
     /**
-     * Get method by reflection.
-     *
-     * @param string $class
-     * @param string $method
-     *
-     * @return \ReflectionMethod
-     *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
-    public static function getMethod(string $class, string $method): \ReflectionMethod
+    public static function getMethod(string $class, string $method): ReflectionMethod
     {
-        $reflectionMethod = new \ReflectionMethod($class, $method);
+        $reflectionMethod = new ReflectionMethod($class, $method);
 
         $reflectionMethod->setAccessible(true);
 
@@ -34,18 +30,12 @@ trait ObjectReflectorTrait
     }
 
     /**
-     * Invoke method by reflection.
+     * @param array<mixed> $args
      *
-     * @param object $object
-     * @param string $method
-     * @param array  $args
-     *
-     * @return mixed
-     *
-     * @throws \ReflectionException
-     * @throws \InvalidArgumentException
+     * @throws ReflectionException
+     * @throws InvalidArgumentException
      */
-    public static function invokeMethod(object $object, string $method, array $args = [])
+    public static function invokeMethod(object $object, string $method, array $args = []): mixed
     {
         $class = self::getClassName($object);
 
@@ -55,18 +45,11 @@ trait ObjectReflectorTrait
     }
 
     /**
-     * Get property by reflection.
-     *
-     * @param string $class
-     * @param string $property
-     *
-     * @return \ReflectionProperty
-     *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
-    public static function getProperty(string $class, string $property): \ReflectionProperty
+    public static function getProperty(string $class, string $property): ReflectionProperty
     {
-        $reflectionProperty = new \ReflectionProperty($class, $property);
+        $reflectionProperty = new ReflectionProperty($class, $property);
 
         $reflectionProperty->setAccessible(true);
 
@@ -74,17 +57,10 @@ trait ObjectReflectorTrait
     }
 
     /**
-     * Get property value.
-     *
-     * @param object $object
-     * @param string $property
-     *
-     * @return mixed
-     *
-     * @throws \ReflectionException
-     * @throws \InvalidArgumentException
+     * @throws ReflectionException
+     * @throws InvalidArgumentException
      */
-    public static function getPropertyValue(object $object, string $property)
+    public static function getPropertyValue(object $object, string $property): mixed
     {
         $class = static::getClassName($object);
 
@@ -94,16 +70,10 @@ trait ObjectReflectorTrait
     }
 
     /**
-     * Set property value by reflection.
-     *
-     * @param object $object
-     * @param string $property
-     * @param mixed  $value
-     *
-     * @throws \ReflectionException
-     * @throws \InvalidArgumentException
+     * @throws ReflectionException
+     * @throws InvalidArgumentException
      */
-    public static function setPropertyValue(object $object, string $property, $value): void
+    public static function setPropertyValue(object $object, string $property, mixed $value): void
     {
         $class = self::getClassName($object);
 
@@ -113,13 +83,10 @@ trait ObjectReflectorTrait
     }
 
     /**
-     * Set property values
+     * @param array<mixed> $propertyMap
      *
-     * @param object  $object
-     * @param mixed[] $propertyMap
-     *
-     * @throws \ReflectionException
-     * @throws \InvalidArgumentException
+     * @throws ReflectionException
+     * @throws InvalidArgumentException
      */
     public static function setPropertyValues(object $object, array $propertyMap): void
     {
@@ -133,25 +100,19 @@ trait ObjectReflectorTrait
     }
 
     /**
-     * Get class name
-     *
-     * @param object $object
-     *
-     * @return string
-     *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     private static function getClassName(object $object): string
     {
-        $class = \get_class($object);
-        if (false === strpos($class, 'Mock_')) {
+        $class = $object::class;
+        if (!str_contains($class, 'Mock_') && !str_contains($class, 'MockObject_')) {
             return $class;
         }
 
-        $class = \get_parent_class($object);
+        $class = get_parent_class($object);
 
         if (false === $class) {
-            throw new \InvalidArgumentException('Unable to get class from provided object.');
+            throw new InvalidArgumentException('Unable to get class from provided object.');
         }
 
         return $class;
