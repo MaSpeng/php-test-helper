@@ -23,10 +23,10 @@
         "docs": "https://github.com/MaSpeng/php-test-helper/blob/master/README.md"
     },
     "require": {
-        "php": "^7.2 | ^8.0"
+        "php": "^8.1"
     },
     "require-dev": {
-        "bamarni/composer-bin-plugin": "^1.4",
+        "bamarni/composer-bin-plugin": "^1.8",
         "roave/security-advisories": "dev-master"
     },
     "autoload": {
@@ -42,7 +42,10 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true
+        }
     },
     "extra": {
         "bamarni-bin": {

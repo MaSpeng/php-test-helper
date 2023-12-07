@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
-    bootstrap="vendor/autoload.php"
-    colors="true"
-    verbose="true"
-    forceCoversAnnotation="true">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.4/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         cacheDirectory=".phpunit.cache"
+         requireCoverageMetadata="true">
     <php>
         <ini name="error_reporting" value="-1"/>
     </php>
@@ -14,12 +13,13 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
-    <coverage>
+    <coverage/>
+    <source>
         <include>
             <directory suffix=".php">src/</directory>
         </include>
         <exclude>
             <file>src/Kernel.php</file>
         </exclude>
-    </coverage>
+    </source>
 </phpunit>

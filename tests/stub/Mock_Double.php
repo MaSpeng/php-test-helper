@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of the PHP test helper project.
  *
@@ -8,11 +11,7 @@
 namespace MaSpeng\TestHelper\stub;
 
 /**
- * This class performs as a helper to test reflection related methods
- *
- * @package MaSpeng\TestHelper\stub
+ * This class performs as a helper to test reflection related methods.
  */
-// @codingStandardsIgnoreLine
-class Mock_Double
-{
-}
+/** @codingStandardsIgnoreLine */
+class Mock_Double {}

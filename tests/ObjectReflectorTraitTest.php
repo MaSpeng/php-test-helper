@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of the PHP test helper project.
  *
@@ -7,262 +10,197 @@
 
 namespace MaSpeng\TestHelper;
 
-use function get_class;
-use MaSpeng\TestHelper\stub\Mock_Double;
+use InvalidArgumentException;
 use MaSpeng\TestHelper\stub\Double;
+use MaSpeng\TestHelper\stub\Mock_Double;
+use MaSpeng\TestHelper\stub\MockObject_Double;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use ReflectionMethod;
 
 /**
- * Object reflector trait test class
- *
- * @package MaSpeng\TestHelper
- *
- * @covers  \MaSpeng\TestHelper\ObjectReflectorTrait
+ * @internal
  */
-class ObjectReflectorTraitTest extends TestCase
+#[CoversClass(ObjectReflectorTrait::class)]
+final class ObjectReflectorTraitTest extends TestCase
 {
-    /**
-     * Test get method
-     *
-     * @return void
-     */
     public function testGetMethod(): void
     {
-        $testDouble = new class
-        {
-            /**
-             * Protected method
-             *
-             * @return void
-             */
-            protected function protectedMethod(): void
-            {
-            }
+        $testDouble = new class() {
+            protected function protectedMethod(): void {}
         };
 
-        $objectReflector = $this->getMockForTrait(ObjectReflectorTrait::class);
+        $objectReflector = new class() {
+            use ObjectReflectorTrait;
+        };
 
         $reflectedMethod = $objectReflector::getMethod(
-            get_class($testDouble),
-            'protectedMethod'
+            $testDouble::class,
+            'protectedMethod',
         );
 
-        static::assertNull($reflectedMethod->invoke($testDouble));
+        self::assertNull($reflectedMethod->invoke($testDouble));
     }
 
-    /**
-     * Test invoke method
-     *
-     * @return void
-     */
     public function testInvokeMethod(): void
     {
-        $testDouble = new class
-        {
-            /**
-             * Protected method
-             *
-             * @return void
-             */
-            protected function protectedMethod(): void
-            {
-            }
+        $testDouble = new class() {
+            protected function protectedMethod(): void {}
         };
 
-        $objectReflector = $this->getMockForTrait(ObjectReflectorTrait::class);
+        $objectReflector = new class() {
+            use ObjectReflectorTrait;
+        };
 
-        static::assertNull(
-            $objectReflector::invokeMethod($testDouble, 'protectedMethod')
+        self::assertNull(
+            $objectReflector::invokeMethod($testDouble, 'protectedMethod'),
         );
     }
 
-    /**
-     * Test get property
-     *
-     * @return void
-     */
     public function testGetProperty(): void
     {
-        $testDouble = new class
-        {
-            /**
-             * @var string
-             */
-            private $privateProperty = 'private property value';
+        $testDouble = new class() {
+            private string $privateProperty = 'private property value';
 
-            /**
-             * Get private property
-             *
-             * @return string
-             */
             public function getPrivatePropertyValue(): string
             {
                 return $this->privateProperty;
             }
         };
 
-        $objectReflector = $this->getMockForTrait(ObjectReflectorTrait::class);
+        $objectReflector = new class() {
+            use ObjectReflectorTrait;
+        };
 
         $property = $objectReflector::getProperty(
-            get_class($testDouble),
-            'privateProperty'
+            $testDouble::class,
+            'privateProperty',
         );
 
-        static::assertSame($testDouble->getPrivatePropertyValue(), $property->getValue($testDouble));
+        self::assertSame($testDouble->getPrivatePropertyValue(), $property->getValue($testDouble));
     }
 
-    /**
-     * Test get property value
-     *
-     * @return void
-     */
     public function testGetPropertyValue(): void
     {
-        $testDouble = new class
-        {
-            /**
-             * @var string
-             */
-            private $privateProperty = 'private property value';
+        $testDouble = new class() {
+            private string $privateProperty = 'private property value';
 
-            /**
-             * Get private property
-             *
-             * @return string
-             */
             public function getPrivatePropertyValue(): string
             {
                 return $this->privateProperty;
             }
         };
 
-        $objectReflector = $this->getMockForTrait(ObjectReflectorTrait::class);
+        $objectReflector = new class() {
+            use ObjectReflectorTrait;
+        };
 
-        static::assertSame(
+        self::assertSame(
             $testDouble->getPrivatePropertyValue(),
-            $objectReflector::getPropertyValue($testDouble, 'privateProperty')
+            $objectReflector::getPropertyValue($testDouble, 'privateProperty'),
         );
     }
 
-    /**
-     * Test set property value
-     *
-     * @return void
-     */
     public function testSetPropertyValue(): void
     {
-        $testDouble = new class
-        {
-            /**
-             * @var string
-             */
-            private $privateProperty = 'private property value';
+        $testDouble = new class() {
+            private string $privateProperty = 'private property value';
 
-            /**
-             * Get private property
-             *
-             * @return string
-             */
             public function getPrivatePropertyValue(): string
             {
                 return $this->privateProperty;
             }
         };
 
-        $objectReflector = $this->getMockForTrait(ObjectReflectorTrait::class);
+        $objectReflector = new class() {
+            use ObjectReflectorTrait;
+        };
 
         $objectReflector::setPropertyValue($testDouble, 'privateProperty', 'new private property value');
 
-        static::assertSame('new private property value', $testDouble->getPrivatePropertyValue());
+        self::assertSame('new private property value', $testDouble->getPrivatePropertyValue());
     }
 
-    /**
-     * Test set property values
-     *
-     * @return void
-     */
     public function testSetPropertyValues(): void
     {
-        $testDouble = new class
-        {
-            /**
-             * @var string
-             */
-            private $privateProperty = 'private property value';
+        $testDouble = new class() {
+            private string $privateProperty = 'private property value';
 
-            /**
-             * @var string
-             */
-            private $anotherPrivateProperty = 'another private property value';
+            private string $anotherPrivateProperty = 'another private property value';
 
-            /**
-             * Get private property
-             *
-             * @return string
-             */
             public function getPrivatePropertyValue(): string
             {
                 return $this->privateProperty;
             }
 
-            /**
-             * Get another private property value
-             *
-             * @return string
-             */
             public function getAnotherPrivatePropertyValue(): string
             {
                 return $this->anotherPrivateProperty;
             }
         };
 
-        $objectReflector = $this->getMockForTrait(ObjectReflectorTrait::class);
+        $objectReflector = new class() {
+            use ObjectReflectorTrait;
+        };
 
         $objectReflector::setPropertyValues(
             $testDouble,
             [
                 'privateProperty' => 'new private property value',
                 'anotherPrivateProperty' => 'new another private property value',
-            ]
+            ],
         );
 
-        static::assertSame('new private property value', $testDouble->getPrivatePropertyValue());
-        static::assertSame('new another private property value', $testDouble->getAnotherPrivatePropertyValue());
+        self::assertSame('new private property value', $testDouble->getPrivatePropertyValue());
+        self::assertSame('new another private property value', $testDouble->getAnotherPrivatePropertyValue());
     }
 
-    /**
-     * Test get class name
-     *
-     * @return void
-     */
     public function testGetClassName(): void
     {
-        $objectReflector = $this->getMockForTrait(ObjectReflectorTrait::class);
+        $objectReflector = new class() {
+            use ObjectReflectorTrait;
+        };
 
-        $mockClass = $this->createMock(Double::class);
+        $mockClass = self::createStub(Double::class);
 
-        $getClassMethod = new \ReflectionMethod(ObjectReflectorTrait::class, 'getClassName');
+        $getClassMethod = new ReflectionMethod(ObjectReflectorTrait::class, 'getClassName');
         $getClassMethod->setAccessible(true);
 
-        static::assertSame(
+        self::assertSame(
             Double::class,
-            $getClassMethod->invoke($objectReflector, $mockClass)
+            $getClassMethod->invoke($objectReflector, $mockClass),
         );
     }
 
     /**
-     * Test get class name should throw exception
-     *
-     * @return void
+     * @param class-string $class
      */
-    public function testGetClassNameShouldThrowException(): void
+    #[DataProvider('getClassNameShouldThrowExceptionProvider')]
+    public function testGetClassNameShouldThrowException(string $class): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
-        $objectReflector = $this->getMockForTrait(ObjectReflectorTrait::class);
+        $objectReflector = new class() {
+            use ObjectReflectorTrait;
+        };
 
-        $getClassMethod = new \ReflectionMethod(ObjectReflectorTrait::class, 'getClassName');
+        $getClassMethod = new ReflectionMethod(ObjectReflectorTrait::class, 'getClassName');
         $getClassMethod->setAccessible(true);
-        $getClassMethod->invoke($objectReflector, new Mock_Double());
+        $getClassMethod->invoke($objectReflector, new $class());
+    }
+
+    /**
+     * @return iterable<string, array{class: class-string}>
+     */
+    public static function getClassNameShouldThrowExceptionProvider(): iterable
+    {
+        yield 'Mock class' => [
+            'class' => Mock_Double::class,
+        ];
+
+        yield 'MockObject class' => [
+            'class' => MockObject_Double::class,
+        ];
     }
 }

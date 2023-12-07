@@ -1,9 +1,16 @@
--include .env
 export
 
+# VARIABLES
+.DEFAULT_GOAL := help
+MAKEFILE := $(firstword $(MAKEFILE_LIST))
+
+.PHONY: help
+help: ## Display help
+	@printf "MaSpeng PHP-Test-Helper Makefile\n\n\033[33mUsage:\033[0m\n  make [target]\n\n\033[33mTargets:\033[0m\n"
+	@awk 'BEGIN {FS = ":.*?## "} /^[0-9a-zA-Z_-]+:.*?## / {printf "  \033[32m%-21s\033[0m %s\n", $$1, $$2}' $(MAKEFILE)
+
 .PHONY: install
-install:
-	@echo "Installing dependencies and development tools"
+install: ## Installing dependencies and development tools
 	@docker run \
 		--rm \
 		--volume "${PWD}:/app" \
@@ -13,62 +20,46 @@ install:
 			composer bin all install \
 	"
 
-.PHONY: analysis
-analysis:
-	@echo "Analyse code"
+.PHONY: analyse-code
+analyse-code: ## Analyse code
 	@docker run \
 		--rm \
 		--volume "${PWD}:/app" \
 		--workdir /app \
-		php:8.0-cli-alpine sh -c " \
+		php:8.1-cli-alpine sh -c " \
 			tools/phpstan/vendor/bin/phpstan --version && \
 			tools/phpstan/vendor/bin/phpstan analyze \
 		"
 
-.PHONY: style-check
-style-check:
-	@echo "Checking code style"
+.PHONY: fix-code
+fix-code: ## Fix code style
 	@docker run \
 		--rm \
 		--volume "${PWD}:/app" \
 		--workdir /app \
-		php:8.0-cli-alpine sh -c " \
-			tools/squizlabs/vendor/bin/phpcs --version && \
-			tools/squizlabs/vendor/bin/phpcs -p \
-		"
-
-.PHONY: style-fix
-style-fix:
-	@echo "Fixing code style"
-	@docker run \
-		--rm \
-		--volume "${PWD}:/app" \
-		--workdir /app \
-		php:8.0-cli-alpine sh -c " \
-			tools/squizlabs/vendor/bin/phpcbf --version && \
-			tools/squizlabs/vendor/bin/phpcbf -p \
+		php:8.1-cli-alpine sh -c " \
+			tools/php-cs-fixer/vendor/bin/php-cs-fixer --version && \
+			tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --ansi \
 		"
 
 .PHONY: test
-test:
-	@echo "Running tests"
+test: ## Run test suite
 	@docker run \
 		--rm \
 		--volume "${PWD}:/app" \
 		--workdir /app \
-		php:8.0-cli-alpine sh -c " \
+		php:8.1-cli-alpine sh -c " \
 			tools/phpunit/vendor/bin/phpunit --version && \
 			tools/phpunit/vendor/bin/phpunit \
 		"
 
 .PHONY: test-with-coverage
-test-with-coverage:
-	@echo "Running tests with code coverage"
+test-with-coverage: ## Run test suite + generate coverage report
 	@docker run \
 		--rm \
 		--volume "${PWD}:/app" \
 		--workdir /app \
-		php:8.0-cli-alpine sh -c " \
+		php:8.1-cli-alpine sh -c " \
 			tools/phpunit/vendor/bin/phpunit --version && \
 			tools/phpunit/vendor/bin/phpunit --coverage-text \
 		"

@@ -4,6 +4,9 @@ jobs:
   prepare:
     docker:
       - image: composer:2
+        auth:
+          username: $DOCKER_HUB_USERNAME
+          password: $DOCKER_HUB_PASSWORD
 
     working_directory: ~/project
 
@@ -26,13 +29,16 @@ jobs:
           root: ~/project
           paths:
             - vendor
+            - tools/php-cs-fixer/vendor/
             - tools/phpstan/vendor/
             - tools/phpunit/vendor/
-            - tools/squizlabs/vendor/
 
   analysis:
     docker:
-      - image: circleci/php:8.0-cli
+      - image: cimg/php:8.1.26
+        auth:
+          username: $DOCKER_HUB_USERNAME
+          password: $DOCKER_HUB_PASSWORD
 
     working_directory: ~/project
 
@@ -44,11 +50,14 @@ jobs:
 
       - run:
           name: Anlaysing code
-          command: tools/phpstan/vendor/bin/phpstan analyze
+          command: tools/phpstan/vendor/bin/phpstan analyze --ansi
 
   style-check:
     docker:
-      - image: circleci/php:8.0-cli
+      - image: cimg/php:8.1.26
+        auth:
+          username: $DOCKER_HUB_USERNAME
+          password: $DOCKER_HUB_PASSWORD
 
     working_directory: ~/project
 
@@ -60,11 +69,14 @@ jobs:
 
       - run:
           name: Checking code style
-          command: tools/squizlabs/vendor/bin/phpcs -p
+          command: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff --verbose --ansi
 
   phpunit:
     docker:
-      - image: circleci/php:8.0-cli
+      - image: cimg/php:8.1.26
+        auth:
+          username: $DOCKER_HUB_USERNAME
+          password: $DOCKER_HUB_PASSWORD
 
     working_directory: ~/project
 
@@ -77,6 +89,8 @@ jobs:
       - run:
           name: Executing unit tests
           command: |
+            sudo pecl install pcov
+            sudo docker-php-ext-enable pcov
             php tools/phpunit/vendor/bin/phpunit \
               --coverage-text \
               --coverage-clover=build/logs/coverage.clover.xml \
@@ -92,7 +106,10 @@ jobs:
 
 codacy-coverage-report:
   docker:
-    - image: circleci/openjdk:8-jdk
+    - image: cimg/openjdk:8-jdk
+      auth:
+        username: $DOCKER_HUB_USERNAME
+        password: $DOCKER_HUB_PASSWORD
 
   working_directory: ~/project
 
@@ -107,7 +124,7 @@ codacy-coverage-report:
         project-token: $CODACY_PROJECT_TOKEN
 
 orbs:
-  coverage-reporter: codacy/coverage-reporter@11.9.0
+  coverage-reporter: codacy/coverage-reporter@13.13.15
 
 workflows:
   analyse-test:

@@ -13,4 +13,5 @@ namespace MaSpeng\TestHelper\stub;
 /**
  * This class performs as a helper to test reflection related methods.
  */
-class Double {}
+/** @codingStandardsIgnoreLine */
+class MockObject_Double {}
