@@ -20,7 +20,7 @@ analysis:
 		--rm \
 		--volume "${PWD}:/app" \
 		--workdir /app \
-		php:8.0-cli-alpine sh -c " \
+		php:8.1-cli-alpine sh -c " \
 			tools/phpstan/vendor/bin/phpstan --version && \
 			tools/phpstan/vendor/bin/phpstan analyze \
 		"
@@ -32,7 +32,7 @@ style-check:
 		--rm \
 		--volume "${PWD}:/app" \
 		--workdir /app \
-		php:8.0-cli-alpine sh -c " \
+		php:8.1-cli-alpine sh -c " \
 			tools/squizlabs/vendor/bin/phpcs --version && \
 			tools/squizlabs/vendor/bin/phpcs -p \
 		"
@@ -44,7 +44,7 @@ style-fix:
 		--rm \
 		--volume "${PWD}:/app" \
 		--workdir /app \
-		php:8.0-cli-alpine sh -c " \
+		php:8.1-cli-alpine sh -c " \
 			tools/squizlabs/vendor/bin/phpcbf --version && \
 			tools/squizlabs/vendor/bin/phpcbf -p \
 		"
@@ -56,7 +56,7 @@ test:
 		--rm \
 		--volume "${PWD}:/app" \
 		--workdir /app \
-		php:8.0-cli-alpine sh -c " \
+		php:8.1-cli-alpine sh -c " \
 			tools/phpunit/vendor/bin/phpunit --version && \
 			tools/phpunit/vendor/bin/phpunit \
 		"
@@ -68,7 +68,7 @@ test-with-coverage:
 		--rm \
 		--volume "${PWD}:/app" \
 		--workdir /app \
-		php:8.0-cli-alpine sh -c " \
+		php:8.1-cli-alpine sh -c " \
 			tools/phpunit/vendor/bin/phpunit --version && \
 			tools/phpunit/vendor/bin/phpunit --coverage-text \
 		"
