@@ -4,6 +4,9 @@ jobs:
   prepare:
     docker:
       - image: composer:2
+        auth:
+          username: $DOCKER_HUB_USERNAME
+          password: $DOCKER_HUB_PASSWORD
 
     working_directory: ~/project
 
@@ -33,6 +36,9 @@ jobs:
   analysis:
     docker:
       - image: circleci/php:8.1-cli
+        auth:
+          username: $DOCKER_HUB_USERNAME
+          password: $DOCKER_HUB_PASSWORD
 
     working_directory: ~/project
 
@@ -49,6 +55,9 @@ jobs:
   style-check:
     docker:
       - image: circleci/php:8.1-cli
+        auth:
+          username: $DOCKER_HUB_USERNAME
+          password: $DOCKER_HUB_PASSWORD
 
     working_directory: ~/project
 
@@ -65,6 +74,9 @@ jobs:
   phpunit:
     docker:
       - image: circleci/php:8.1-cli
+        auth:
+          username: $DOCKER_HUB_USERNAME
+          password: $DOCKER_HUB_PASSWORD
 
     working_directory: ~/project
 
@@ -93,6 +105,9 @@ jobs:
 codacy-coverage-report:
   docker:
     - image: circleci/openjdk:8-jdk
+      auth:
+        username: $DOCKER_HUB_USERNAME
+        password: $DOCKER_HUB_PASSWORD
 
   working_directory: ~/project
 
