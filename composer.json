@@ -66,11 +66,11 @@
             ".editorconfig",
             ".gitattributes",
             ".gitignore",
+            ".php-cs-fixer.php",
             "composer.lock",
             "Makefile",
-            "phpcs.xml.dist",
-            "phpstan.neon.dist",
-            "phpunit.xml.dist"
+            "phpstan.neon",
+            "phpunit.xml"
         ]
     }
 }
