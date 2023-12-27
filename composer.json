@@ -43,6 +43,9 @@
         "analyse-code": [
             "tools/phpstan/vendor/bin/phpstan --version; tools/phpstan/vendor/bin/phpstan --ansi"
         ],
+        "lint-code": [
+            "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff --verbose --ansi"
+        ],
         "fix-code": [
             "tools/php-cs-fixer/vendor/bin/php-cs-fixer --version; tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --ansi"
         ],
@@ -55,6 +58,7 @@
     },
     "scripts-descriptions": {
         "analyse-code": "Analyse code with static code analyzer.",
+        "lint-code": "Lint code style with PHP-CS-Fixer.",
         "fix-code": "Fix code style with PHP-CS-Fixer.",
         "test": "Run all testsuites.",
         "test-with-coverage": "Run all testsuites with coverage report."
@@ -86,6 +90,8 @@
             "tools/",
             ".editorconfig",
             ".hadolint.yaml",
+            ".markdownlint.yaml",
+            ".markdownlintignore",
             ".gitattributes",
             ".gitignore",
             ".php-cs-fixer.php",

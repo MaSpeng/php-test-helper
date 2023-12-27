@@ -1,0 +1,22 @@
+name: markdown-check
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+
+jobs:
+  markdownlint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check Markdown files
+        uses: nosborn/github-action-markdown-cli@v3
+        with:
+          files: '. .github/*.md'
