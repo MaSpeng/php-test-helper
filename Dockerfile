@@ -33,6 +33,7 @@ RUN set -eux; \
         7zip \
         bash \
         git \
+        openssh \
         unzip \
         zip; \
     apk del .build-deps; \
