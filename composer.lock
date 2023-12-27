@@ -70,12 +70,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "498a07ca22004364fc54bc909b77de792a10c127"
+                "reference": "be9456d1430df8be755ff7da33b22b80f0ed2f5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/498a07ca22004364fc54bc909b77de792a10c127",
-                "reference": "498a07ca22004364fc54bc909b77de792a10c127",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/be9456d1430df8be755ff7da33b22b80f0ed2f5f",
+                "reference": "be9456d1430df8be755ff7da33b22b80f0ed2f5f",
                 "shasum": ""
             },
             "conflict": {
@@ -779,7 +779,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-06T18:04:43+00:00"
+            "time": "2023-12-22T00:14:36+00:00"
         }
     ],
     "aliases": [],
