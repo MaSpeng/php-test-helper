@@ -95,6 +95,7 @@
             ".gitattributes",
             ".gitignore",
             ".php-cs-fixer.php",
+            ".yamllint.yaml",
             "composer.lock",
             "phpstan.neon",
             "phpunit.xml"
