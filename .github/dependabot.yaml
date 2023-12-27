@@ -8,6 +8,15 @@ registries:
     password: '${{ secrets.GITHUB_TOKEN }}'
 
 updates:
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    reviewers:
+      - 'MaSpeng'
+    schedule:
+      interval: 'weekly'
+      time: '08:00'
+      timezone: 'Europe/Berlin'
+
   - package-ecosystem: 'composer'
     directory: '/'
     reviewers:
