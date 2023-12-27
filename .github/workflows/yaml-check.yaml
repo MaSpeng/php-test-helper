@@ -1,0 +1,20 @@
+name: yaml-check
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+
+jobs:
+  yamllint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check YAML files
+        uses: ibiqlik/action-yamllint@v3

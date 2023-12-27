@@ -10,6 +10,7 @@
 /.markdownlint.yaml     export-ignore
 /.markdownlintignore    export-ignore
 /.php-cs-fixer.php      export-ignore
+/.yamllint.yaml         export-ignore
 /composer.lock          export-ignore
 /phpstan.neon           export-ignore
 /phpunit.xml            export-ignore
