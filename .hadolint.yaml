@@ -1,0 +1,14 @@
+failure-threshold: error
+
+ignored:
+  # pin apt versions
+  - DL3008
+  # pin npm versions
+  - DL3016
+  # shell option pipefail
+  - DL4006
+
+trustedRegistries:
+  - docker.io
+  - ghcr.io
+  - mcr.microsoft.com

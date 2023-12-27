@@ -85,6 +85,7 @@
             "tests/",
             "tools/",
             ".editorconfig",
+            ".hadolint.yaml",
             ".gitattributes",
             ".gitignore",
             ".php-cs-fixer.php",
