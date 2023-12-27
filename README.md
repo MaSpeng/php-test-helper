@@ -9,7 +9,7 @@ This library has the target to simplify various tasks during test development.
 To install this library just add it as development dependency to your project using:
 
 ```bash
-$ composer require --dev maspeng/test-helper
+composer require --dev maspeng/test-helper
 ```
 
 ## Usage

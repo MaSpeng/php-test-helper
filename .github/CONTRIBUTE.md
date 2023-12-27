@@ -7,8 +7,10 @@ All new features **must** include documentation before they may be accepted and 
 ## Set Up
 
 1. This project uses Docker
-  - macOS: [Download Docker for Mac](https://www.docker.com/docker-mac)
-  - Windows: [Download Docker for Windows](https://www.docker.com/docker-windows)
+
+    - macOS: [Download Docker for Mac](https://www.docker.com/docker-mac)
+    - Windows: [Download Docker for Windows](https://www.docker.com/docker-windows)
+
 2. Install Docker and [Docker Toolbox](https://www.docker.com/toolbox)
 
 ## Running Tests
@@ -18,96 +20,117 @@ To run tests:
 - Clone this repository:
 
 ```bash
-$ git clone git@github.com:maspeng/php-test-helper.git
+git clone git@github.com:maspeng/php-test-helper.git
 ```
 
 - Or via HTTPS
 
 ```bash
-$ git clone https://github.com/maspeng/php-test-helper.git
+git clone https://github.com/maspeng/php-test-helper.git
 ```
 
-- Install development dependencies via make:
+- Open the project in the provided devcontainer
+
+- Install development dependencies:
 
 ```bash
-$ make install
+composer install
 ```
 
 ## Running Code Analysis
 
-This component uses [phpstan](https://github.com/phpstan/phpstan) for code analysis, and provides configuration for our selected checks.
+This component uses [phpstan](https://github.com/phpstan/phpstan) for code analysis, and provides configuration for our
+selected checks.
 
 To run analyses:
 
 ```bash
-$ make analysis
+composer run-script analyse-code
 ```
 
 ## Running Coding Standards Checks
 
-This component uses [phpcs](https://github.com/squizlabs/PHP_CodeSniffer) for coding standards checks, and provides configuration for our selected checks.
+This component uses [php-cs-fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer) for coding standards checks, and
+provides configuration for our selected checks.
 
 To run checks only:
 
 ```bash
-$ make style-check
+composer run-script lint-code
 ```
 
-`phpcs` also installs a tool named `phpcbf` which can attempt to fix problems for you:
+`php-cs-fixer` also provides the ability to fix problems for you:
 
 ```bash
-$ make stlye-fix
+composer run-script fix-code
 ```
 
-If you allow phpcbf to fix CS issues, please re-run the tests to ensure they pass, and make sure you add and commit the changes after verification.
+If you allow `php-cs-fixer`` to fix CS issues, please re-run the tests to ensure they pass, and make sure you add and
+commit the changes after verification.
 
 ## Running Unit Tests
 
-This component uses [phpunit](https://phpunit.de/) for unit tests and provides configuration for the tests.
+This component uses [phpunit](https://phpunit.de) for unit tests and provides configuration for the tests.
 
 To run tests:
 
 ```bash
-$ make test
+composer run-script test
+```
+
+To run tests including a coverage report:
+  
+```bash
+composer run-script test-with-coverage
 ```
 
 ## Recommended Workflow for Contributions
 
-Your first step is to establish a public repository from which we can pull your work into the master repository. We recommend using [GitHub](https://github.com), as that is where the component is already hosted.
+Your first step is to establish a public repository from which we can pull your work into the master repository. We
+recommend using [GitHub](https://github.com), as that is where the component is already hosted.
 
 1. Setup a [GitHub account](http://github.com/), if you haven't yet
 2. Fork the [repository](http://github.com/maspeng/php-test-helper)
 3. Clone the canonical repository locally and enter it.
 
-```bash
-$ git clone git://github.com/maspeng/php-test-helper.git
-$ cd php-test-helper
-```
+    ```bash
+    git clone git://github.com/maspeng/php-test-helper.git
+    cd php-test-helper
+    ```
 
 4. Add a remote to your fork; substitute your GitHub username in the command below.
 
-```bash
-$ git remote add {username} git@github.com:{username}/php-test-helper.git
-$ git fetch {username}
-```
+    ```bash
+    git remote add {username} git@github.com:{username}/php-test-helper.git
+    git fetch {username}
+    ```
 
 ### Keeping Up-to-Date
 
-Periodically, you should update your fork or personal repository to match the canonical repository. Assuming you have setup your local repository per the instructions above, you can do the following:
+Periodically, you should update your fork or personal repository to match the canonical repository. Assuming you have
+setup your local repository per the instructions above, you can do the following:
 
 ```bash
-$ git checkout master
+$ git checkout main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+
 $ git fetch origin
-$ git rebase origin/master
+
+$ git rebase origin/main
+Current branch feature/#123-description is up to date.
+
 # OPTIONALLY, to keep your remote up-to-date -
-$ git push {username} master:master
+$ git push {username} main:main
 ```
 
-If you're tracking other branches -- for example, the "develop" branch, where new feature development occurs -- you'll want to do the same operations for that branch; simply substitute  "develop" for "master".
+If you're tracking other branches -- for example, the "develop" branch, where new feature development occurs -- you'll
+want to do the same operations for that branch; simply substitute  "develop" for "master".
 
 ### Working on a patch
 
-We recommend you do each new feature or bugfix in a new branch. This simplifies the task of code review as well as the task of merging your changes into the canonical repository.
+We recommend you do each new feature or bugfix in a new branch. This simplifies the task of code review as well as the
+task of merging your changes into the canonical repository.
 
 A typical workflow will then consist of the following:
 
@@ -127,7 +150,7 @@ Switched to a new branch 'hotfix/1234'
 ... do some work ...
 
 ```bash
-$ git commit
+git commit
 ```
 
 ... write your log message ...
@@ -145,16 +168,20 @@ To ssh://git@github.com/{username}/php-test-helper.git
 
 To send a pull request, you have two options.
 
-If using GitHub, you can do the pull request from there. Navigate to your repository, select the branch you just created, and then select the "Pull Request" button in the upper right. Select the user/organization "maspeng" as the recipient.
+If using GitHub, you can do the pull request from there. Navigate to your repository, select the branch you just created,
+and then select the "Pull Request" button in the upper right. Select the user/organization "maspeng" as the recipient.
 
-If using your own repository - or even if using GitHub - you can use `git format-patch` to create a patchset for us to apply; in fact, this is **recommended** for security-related patches. If you use `format-patch`, please send the patches as attachments to: `MaSpeng@outlook.de`
+If using your own repository - or even if using GitHub - you can use `git format-patch` to create a patchset for us to
+apply; in fact, this is **recommended** for security-related patches. If you use `format-patch`, please send the patches
+as attachments to: `MaSpeng@outlook.de`
 
 #### What branch to issue the pull request against?
 
 Which branch should you issue a pull request against?
 
 - For fixes against the stable release, issue the pull request against the "master" branch.
-- For new features, or fixes that introduce new elements to the public API (such as new public methods or properties), issue the pull request against the "develop" branch.
+- For new features, or fixes that introduce new elements to the public API (such as new public methods or properties),
+issue the pull request against the "develop" branch.
 
 ### Branch Cleanup
 
@@ -165,15 +192,16 @@ Once you know that your changes have been accepted to the master repository, we 
 - Local branch cleanup
 
 ```bash
-$ git branch -d <branchname>
+git branch -d <branchname>
 ```
 
 - Remote branch removal
 
 ```bash
-$ git push {username} :<branchname>
+git push {username} :<branchname>
 ```
 
 ## Conduct
 
-Please see our [CODE OF CONDUCT.md](CODE_OF_CONDUCT.md) to understand expected behavior when interacting with others in the project.
+Please see our [CODE OF CONDUCT.md](CODE_OF_CONDUCT.md) to understand expected behavior when interacting with others in
+the project.
