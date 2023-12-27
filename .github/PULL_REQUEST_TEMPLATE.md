@@ -1,4 +1,4 @@
-Provide a narrative description of what you are trying to accomplish:
+# Provide a narrative description of what you are trying to accomplish
 
 - [ ] Are you fixing a bug?
   - [ ] Detail how the bug is invoked currently.
