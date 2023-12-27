@@ -39,6 +39,26 @@
             "MaSpeng\\TestHelper\\": "tests/"
         }
     },
+    "scripts": {
+        "analyse-code": [
+            "tools/phpstan/vendor/bin/phpstan --version; tools/phpstan/vendor/bin/phpstan --ansi"
+        ],
+        "fix-code": [
+            "tools/php-cs-fixer/vendor/bin/php-cs-fixer --version; tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --ansi"
+        ],
+        "test": [
+            "tools/phpunit/vendor/bin/phpunit --version; tools/phpunit/vendor/bin/phpunit"
+        ],
+        "test-with-coverage": [
+            "tools/phpunit/vendor/bin/phpunit --version; tools/phpunit/vendor/bin/phpunit --coverage-text"
+        ]
+    },
+    "scripts-descriptions": {
+        "analyse-code": "Analyse code with static code analyzer.",
+        "fix-code": "Fix code style with PHP-CS-Fixer.",
+        "test": "Run all testsuites.",
+        "test-with-coverage": "Run all testsuites with coverage report."
+    },
     "minimum-stability": "stable",
     "prefer-stable": true,
     "config": {
@@ -69,7 +89,6 @@
             ".gitignore",
             ".php-cs-fixer.php",
             "composer.lock",
-            "Makefile",
             "phpstan.neon",
             "phpunit.xml"
         ]
