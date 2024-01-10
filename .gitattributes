@@ -1,5 +1,4 @@
 /**                     text eol=lf
-/.circleci/             export-ignore
 /.github/               export-ignore
 /tests/                 export-ignore
 /tools/                 export-ignore

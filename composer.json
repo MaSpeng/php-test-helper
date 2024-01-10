@@ -84,7 +84,6 @@
     },
     "archive": {
         "exclude": [
-            ".circleci/",
             ".github/",
             "tests/",
             "tools/",
