@@ -84,21 +84,22 @@
     },
     "archive": {
         "exclude": [
-            ".github/",
-            "tests/",
-            "tools/",
-            "var/",
+            ".devcontainer/",
             ".editorconfig",
+            ".gitattributes",
+            ".github/",
+            ".gitignore",
             ".hadolint.yaml",
             ".markdownlint.yaml",
             ".markdownlintignore",
-            ".gitattributes",
-            ".gitignore",
             ".php-cs-fixer.php",
             ".yamllint.yaml",
             "composer.lock",
             "phpstan.neon",
-            "phpunit.xml"
+            "phpunit.xml",
+            "tests/",
+            "tools/",
+            "var/"
         ]
     }
 }
