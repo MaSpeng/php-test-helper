@@ -1,8 +1,8 @@
 failure-threshold: error
 
 ignored:
-  # pin apt versions
-  - DL3008
+  # pin apk versions
+  - DL3018
   # pin npm versions
   - DL3016
   # shell option pipefail
