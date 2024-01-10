@@ -19,7 +19,7 @@ return (new PhpCsFixer\Config())
         // Alias https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/blob/master/doc/rules/index.rst#alias
         'mb_str_functions' => true,
         // Basic https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/blob/master/doc/rules/index.rst#basic
-        'curly_braces_position' => true,
+        'braces_position' => true,
         'no_multiple_statements_per_line' => true,
         // Clas Notation https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/blob/master/doc/rules/index.rst#class-notation
         'ordered_interfaces' => true,
