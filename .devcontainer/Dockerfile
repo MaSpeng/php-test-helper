@@ -6,6 +6,7 @@ WORKDIR /workspace
 
 COPY --from=composer/composer:2.6.6 --link /usr/bin/composer /usr/local/bin/
 
+# hadolint ignore=SC2086
 RUN set -eux; \
     apk add --no-cache --upgrade --virtual .build-deps \
         ${PHPIZE_DEPS} \
