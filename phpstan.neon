@@ -7,3 +7,5 @@ parameters:
 
     bootstrapFiles:
         - tools/phpunit/vendor/autoload.php
+
+    tmpDir: var/phpstan

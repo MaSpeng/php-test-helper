@@ -5,7 +5,8 @@ declare(strict_types=1);
 $finder = (new PhpCsFixer\Finder())
     ->in(__DIR__)
     ->exclude('docs')
-    ->exclude('tools');
+    ->exclude('tools')
+    ->exclude('var');
 
 return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
@@ -113,4 +114,4 @@ return (new PhpCsFixer\Config())
         'statement_indentation' => true,
     ])
     ->setFinder($finder)
-    ->setCacheFile('.php-cs-fixer.cache');
+    ->setCacheFile('var/php-cs-fixer/.php-cs-fixer.cache');
