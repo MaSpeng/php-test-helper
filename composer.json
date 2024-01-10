@@ -87,6 +87,7 @@
             ".github/",
             "tests/",
             "tools/",
+            "var/",
             ".editorconfig",
             ".hadolint.yaml",
             ".markdownlint.yaml",
