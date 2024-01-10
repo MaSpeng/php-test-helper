@@ -15,15 +15,45 @@ jobs:
   lint-analyse-test:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        operating-system:
+          - ubuntu-latest
+        php-versions:
+          - 8.1
+          - 8.2
+          - 8.3
+
+    name: PHP ${{ matrix.php-versions }} - Lint, Analyse and Test on ${{ matrix.operating-system }}
+
+    env:
+      extensions: pcov
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup cache environment
+        id: php-extension-cache
+        uses: shivammathur/cache-extensions@v1
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ${{ env.extensions }}
+          key: cache-v1
+
+      - name: Restore extensions cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.php-extension-cache.outputs.dir }}
+          key: ${{ steps.php-extension-cache.outputs.key }}
+          restore-keys: ${{ steps.php-extension-cache.outputs.key }}
+
       - name: Setup PHP with PECL extensions
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ env.PHP_VERSION }}
+          php-version: ${{ matrix.php-versions }}
           ini-values: zend.assertions = 1
+          extensions: ${{ env.extensions }}
           tools: composer:${{ env.COMPOSER_VERSION }}
           coverage: pcov
 
@@ -35,42 +65,28 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-Composer-V1-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-Composer-V1-
-
-      - name: Restore vendor cache
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: ${{ runner.os }}-Vendor-V1-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-Vendor-V1-
-
-      - name: Restore tools vendor cache
-        uses: actions/cache@v3
-        with:
-          path: tools/**/vendor
-          key: ${{ runner.os }}-Tools-Vendor-V1-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-Vendor-V1-
+          key: ${{ runner.os }}-${{matrix.php-versions}}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
 
       - name: Restore PHPStan cache
         uses: actions/cache@v3
         with:
           path: var/phpstan
-          key: ${{ runner.os }}-PHPStan-V1-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-${{matrix.php-versions}}-PHPStan-V1-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-PHPStan-V1-
 
       - name: Restore PHP Coding Standards Fixer cache
         uses: actions/cache@v3
         with:
-          path: .php-cs-fixer.cache
-          key: ${{ runner.os }}-PHPCSFIXER-V1-${{ hashFiles('**/composer.lock') }}
+          path: var/php-cs-fixer
+          key: ${{ runner.os }}-${{matrix.php-versions}}-PHPCSFIXER-V1-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-PHPCSFIXER-V1-
 
-      - name: Restore PHPUnit result cache
+      - name: Restore PHPUnit cache
         uses: actions/cache@v3
         with:
-          path: .phpunit.cache
-          key: ${{ runner.os }}-PHPUnit-V1-${{ hashFiles('**/composer.lock') }}
+          path: var/phpunit/
+          key: ${{ runner.os }}-${{matrix.php-versions}}-PHPUnit-V1-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-PHPUnit-V1-
 
       - name: Install dependencies
