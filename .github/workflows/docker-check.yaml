@@ -19,4 +19,4 @@ jobs:
       - name: Check Dockerfile
         uses: hadolint/hadolint-action@v3.1.0
         with:
-          recursive: true
+          dockerfile: .devcontainer/Dockerfile
