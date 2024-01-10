@@ -1,4 +1,4 @@
 {
     "name": "PHP",
-    "dockerFile": "../Dockerfile"
+    "dockerFile": "Dockerfile"
 }
