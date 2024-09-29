@@ -42,7 +42,7 @@ jobs:
           key: cache-v1
 
       - name: Restore extensions cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ steps.php-extension-cache.outputs.dir }}
           key: ${{ steps.php-extension-cache.outputs.key }}
@@ -62,28 +62,28 @@ jobs:
         run: echo "dir=$(composer config cache-files-dir)" >> ${GITHUB_OUTPUT}
 
       - name: Restore Composer cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-${{matrix.php-versions}}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Restore PHPStan cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: var/phpstan
           key: ${{ runner.os }}-${{matrix.php-versions}}-PHPStan-V1-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-PHPStan-V1-
 
       - name: Restore PHP Coding Standards Fixer cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: var/php-cs-fixer
           key: ${{ runner.os }}-${{matrix.php-versions}}-PHPCSFIXER-V1-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-PHPCSFIXER-V1-
 
       - name: Restore PHPUnit cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: var/phpunit/
           key: ${{ runner.os }}-${{matrix.php-versions}}-PHPUnit-V1-${{ hashFiles('**/composer.lock') }}
