@@ -1,12 +1,5 @@
 version: 2
 
-registries:
-  ghcr.io:
-    type: 'docker-registry'
-    url: 'ghcr.io'
-    username: 'USERNAME'
-    password: '${{ secrets.GITHUB_TOKEN }}'
-
 updates:
   - package-ecosystem: 'github-actions'
     directory: '/'
@@ -17,35 +10,8 @@ updates:
       time: '08:00'
       timezone: 'Europe/Berlin'
 
-  - package-ecosystem: 'composer'
+  - package-ecosystem: 'devcontainers'
     directory: '/'
-    reviewers:
-      - 'MaSpeng'
-    schedule:
-      interval: 'weekly'
-      time: '08:00'
-      timezone: 'Europe/Berlin'
-
-  - package-ecosystem: 'composer'
-    directory: '/tools/php-cs-fixer'
-    reviewers:
-      - 'MaSpeng'
-    schedule:
-      interval: 'weekly'
-      time: '08:00'
-      timezone: 'Europe/Berlin'
-
-  - package-ecosystem: 'composer'
-    directory: '/tools/phpstan'
-    reviewers:
-      - 'MaSpeng'
-    schedule:
-      interval: 'weekly'
-      time: '08:00'
-      timezone: 'Europe/Berlin'
-
-  - package-ecosystem: 'composer'
-    directory: '/tools/phpunit'
     reviewers:
       - 'MaSpeng'
     schedule:
@@ -55,6 +21,19 @@ updates:
 
   - package-ecosystem: 'docker'
     directory: '/'
+    reviewers:
+      - 'MaSpeng'
+    schedule:
+      interval: 'weekly'
+      time: '08:00'
+      timezone: 'Europe/Berlin'
+
+  - package-ecosystem: 'composer'
+    directories:
+      - '/'
+      - '/tools/php-cs-fixer'
+      - '/tools/phpstan'
+      - '/tools/phpunit'
     reviewers:
       - 'MaSpeng'
     schedule:
