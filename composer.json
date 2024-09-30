@@ -89,7 +89,6 @@
             ".gitattributes",
             ".github/",
             ".gitignore",
-            ".hadolint.yaml",
             ".markdownlint.yaml",
             ".markdownlintignore",
             ".php-cs-fixer.php",
