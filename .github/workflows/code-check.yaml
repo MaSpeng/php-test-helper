@@ -99,7 +99,7 @@ jobs:
         run: composer run-script -- analyse-code
 
       - name: Run tests and report code coverage
-        run: composer run-script -- test --coverage-clover clover.xml --coverage-text
+        run: composer run-script -- test --coverage-clover clover.xml --coverage-text --testdox
 
       - name: Check test coverage
         uses: johanvanhelden/gha-clover-test-coverage-check@v1
