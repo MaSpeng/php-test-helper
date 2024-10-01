@@ -5,7 +5,6 @@ declare(strict_types=1);
 $finder = (new PhpCsFixer\Finder())
     ->in(__DIR__)
     ->exclude('docs')
-    ->exclude('tools')
     ->exclude('var');
 
 return (new PhpCsFixer\Config())

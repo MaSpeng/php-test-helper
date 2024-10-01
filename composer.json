@@ -26,7 +26,11 @@
         "php": "^8.1"
     },
     "require-dev": {
-        "bamarni/composer-bin-plugin": "^1.8",
+        "friendsofphp/php-cs-fixer": "^3.64",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^1.12",
+        "phpstan/phpstan-phpunit": "^1.4",
+        "phpunit/phpunit": "^10.5",
         "roave/security-advisories": "dev-master"
     },
     "autoload": {
@@ -41,19 +45,19 @@
     },
     "scripts": {
         "analyse-code": [
-            "tools/phpstan/vendor/bin/phpstan --version; tools/phpstan/vendor/bin/phpstan --ansi"
+            "phpstan --version; phpstan --ansi"
         ],
         "lint-code": [
-            "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff --verbose --ansi"
+            "php-cs-fixer --version; php-cs-fixer fix --dry-run --diff --verbose --ansi"
         ],
         "fix-code": [
-            "tools/php-cs-fixer/vendor/bin/php-cs-fixer --version; tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --ansi"
+            "php-cs-fixer --version; php-cs-fixer fix --ansi"
         ],
         "test": [
-            "tools/phpunit/vendor/bin/phpunit --version; tools/phpunit/vendor/bin/phpunit"
+            "phpunit"
         ],
         "test-with-coverage": [
-            "tools/phpunit/vendor/bin/phpunit --version; tools/phpunit/vendor/bin/phpunit --coverage-text"
+            "phpunit --coverage-text"
         ]
     },
     "scripts-descriptions": {
@@ -68,15 +72,10 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "bamarni/composer-bin-plugin": true
+            "phpstan/extension-installer": true
         }
     },
     "extra": {
-        "bamarni-bin": {
-            "bin-links": false,
-            "forward-command": true,
-            "target-directory": "tools"
-        },
         "branch-alias": {
             "dev-master": "0.3.x-dev",
             "dev-develop": "0.4.x-dev"
@@ -97,7 +96,6 @@
             "phpstan.neon",
             "phpunit.xml",
             "tests/",
-            "tools/",
             "var/"
         ]
     }

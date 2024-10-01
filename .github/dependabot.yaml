@@ -29,11 +29,7 @@ updates:
       timezone: 'Europe/Berlin'
 
   - package-ecosystem: 'composer'
-    directories:
-      - '/'
-      - '/tools/php-cs-fixer'
-      - '/tools/phpstan'
-      - '/tools/phpunit'
+    directory: '/'
     reviewers:
       - 'MaSpeng'
     schedule:
