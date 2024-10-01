@@ -27,11 +27,11 @@ final class ObjectReflectorTraitTest extends TestCase
 {
     public function testGetMethod(): void
     {
-        $testDouble = new class() {
+        $testDouble = new class {
             protected function protectedMethod(): void {}
         };
 
-        $objectReflector = new class() {
+        $objectReflector = new class {
             use ObjectReflectorTrait;
         };
 
@@ -45,11 +45,11 @@ final class ObjectReflectorTraitTest extends TestCase
 
     public function testInvokeMethod(): void
     {
-        $testDouble = new class() {
+        $testDouble = new class {
             protected function protectedMethod(): void {}
         };
 
-        $objectReflector = new class() {
+        $objectReflector = new class {
             use ObjectReflectorTrait;
         };
 
@@ -60,7 +60,7 @@ final class ObjectReflectorTraitTest extends TestCase
 
     public function testGetProperty(): void
     {
-        $testDouble = new class() {
+        $testDouble = new class {
             private string $privateProperty = 'private property value';
 
             public function getPrivatePropertyValue(): string
@@ -69,7 +69,7 @@ final class ObjectReflectorTraitTest extends TestCase
             }
         };
 
-        $objectReflector = new class() {
+        $objectReflector = new class {
             use ObjectReflectorTrait;
         };
 
@@ -83,7 +83,7 @@ final class ObjectReflectorTraitTest extends TestCase
 
     public function testGetPropertyValue(): void
     {
-        $testDouble = new class() {
+        $testDouble = new class {
             private string $privateProperty = 'private property value';
 
             public function getPrivatePropertyValue(): string
@@ -92,7 +92,7 @@ final class ObjectReflectorTraitTest extends TestCase
             }
         };
 
-        $objectReflector = new class() {
+        $objectReflector = new class {
             use ObjectReflectorTrait;
         };
 
@@ -104,7 +104,7 @@ final class ObjectReflectorTraitTest extends TestCase
 
     public function testSetPropertyValue(): void
     {
-        $testDouble = new class() {
+        $testDouble = new class {
             private string $privateProperty = 'private property value';
 
             public function getPrivatePropertyValue(): string
@@ -113,7 +113,7 @@ final class ObjectReflectorTraitTest extends TestCase
             }
         };
 
-        $objectReflector = new class() {
+        $objectReflector = new class {
             use ObjectReflectorTrait;
         };
 
@@ -124,7 +124,7 @@ final class ObjectReflectorTraitTest extends TestCase
 
     public function testSetPropertyValues(): void
     {
-        $testDouble = new class() {
+        $testDouble = new class {
             private string $privateProperty = 'private property value';
 
             private string $anotherPrivateProperty = 'another private property value';
@@ -140,7 +140,7 @@ final class ObjectReflectorTraitTest extends TestCase
             }
         };
 
-        $objectReflector = new class() {
+        $objectReflector = new class {
             use ObjectReflectorTrait;
         };
 
@@ -158,7 +158,7 @@ final class ObjectReflectorTraitTest extends TestCase
 
     public function testGetClassName(): void
     {
-        $objectReflector = new class() {
+        $objectReflector = new class {
             use ObjectReflectorTrait;
         };
 
@@ -181,7 +181,7 @@ final class ObjectReflectorTraitTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $objectReflector = new class() {
+        $objectReflector = new class {
             use ObjectReflectorTrait;
         };
 
