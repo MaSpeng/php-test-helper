@@ -5,6 +5,10 @@ on:
     types:
       - checks_requested
 
+  push:
+    branches:
+      - 'main'
+
   pull_request:
     types:
       - opened
