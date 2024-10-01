@@ -50,6 +50,12 @@
         "lint-code": [
             "php-cs-fixer --version; php-cs-fixer fix --dry-run --diff --verbose --ansi"
         ],
+        "lint-markdown": [
+            "markdownlint --version; markdownlint ."
+        ],
+        "lint-yaml": [
+            "yamllint --version; yamllint ."
+        ],
         "fix-code": [
             "php-cs-fixer --version; php-cs-fixer fix --ansi"
         ],
@@ -63,6 +69,8 @@
     "scripts-descriptions": {
         "analyse-code": "Analyse code with static code analyzer.",
         "lint-code": "Lint code style with PHP-CS-Fixer.",
+        "lint-markdown": "Lint markdown files with markdownlint.",
+        "lint-yaml": "Lint YAML files with yamllint.",
         "fix-code": "Fix code style with PHP-CS-Fixer.",
         "test": "Run all testsuites.",
         "test-with-coverage": "Run all testsuites with coverage report."
