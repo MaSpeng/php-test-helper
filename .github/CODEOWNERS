@@ -1,0 +1,9 @@
+# GitHub Actions files
+/.github/              MaSpeng
+
+# Devcontainer configuration
+/.devcontainer/        MaSpeng
+
+# Composer package files
+composer.json          MaSpeng
+composer-lock.yaml     MaSpeng
