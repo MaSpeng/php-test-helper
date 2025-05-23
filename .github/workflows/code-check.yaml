@@ -103,6 +103,8 @@ jobs:
 
       - name: Lint source code
         run: composer run-script -- lint-code
+        env:
+          PHP_CS_FIXER_IGNORE_ENV: 1
 
       - name: Analyse code
         run: composer run-script -- analyse-code
