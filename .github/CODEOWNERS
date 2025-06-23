@@ -6,4 +6,4 @@
 
 # Composer package files
 composer.json          MaSpeng
-composer-lock.yaml     MaSpeng
+composer.lock          MaSpeng
