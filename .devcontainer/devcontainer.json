@@ -1,17 +1,20 @@
 {
-	"name": "php-test-helper",
-	"image": "mcr.microsoft.com/devcontainers/base:bookworm",
-	"features": {
-		"ghcr.io/devcontainers/features/node:1": {
-			"version": "lts",
-			"pnpmVersion": "latest",
-			"nvmVersion": "latest"
-		},
-		"ghcr.io/devcontainers/features/php:1": {
-			"installComposer": true,
-			"version": "8.1"
-		},
-		"ghcr.io/marcozac/devcontainer-features/shellcheck:1": {}
-	},
-    "postCreateCommand": ".devcontainer/hooks/post-create.sh"
+  "name": "php-test-helper",
+  "image": "mcr.microsoft.com/devcontainers/php:8.1-trixie",
+  "features": {
+    "ghcr.io/devcontainers-extra/features/markdownlint-cli2:1": {},
+    "ghcr.io/devcontainers-extra/features/yamllint:2": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "DavidAnson.vscode-markdownlint",
+        "EditorConfig.EditorConfig",
+        "github.copilot",
+        "github.vscode-github-actions",
+        "github.vscode-pull-request-github",
+        "kuscamara.yamllint-fix"
+      ]
+    }
+  }
 }

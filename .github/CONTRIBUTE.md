@@ -185,7 +185,8 @@ issue the pull request against the "develop" branch.
 
 ### Branch Cleanup
 
-As you might imagine, if you are a frequent contributor, you'll start to get a ton of branches both locally and on your remote.
+As you might imagine, if you are a frequent contributor, you'll start to get a ton of branches both locally and on your
+remote.
 
 Once you know that your changes have been accepted to the master repository, we suggest doing some cleanup of these branches.
 

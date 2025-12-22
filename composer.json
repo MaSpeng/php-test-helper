@@ -51,7 +51,7 @@
             "php-cs-fixer --version; php-cs-fixer fix --dry-run --diff --verbose --ansi"
         ],
         "lint-markdown": [
-            "markdownlint --version; markdownlint ."
+            "markdownlint-cli2 \".github/*.md\" \"*.md\" \"docs/*.md\""
         ],
         "lint-yaml": [
             "yamllint --version; yamllint ."
