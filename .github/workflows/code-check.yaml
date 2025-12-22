@@ -17,7 +17,7 @@ on:
       - synchronize
 
 env:
-  COMPOSER_VERSION: 2.8.9
+  COMPOSER_VERSION: 2.9.2
 
 jobs:
   lint-analyse-test:
