@@ -5,19 +5,19 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
-      time: '08:00'
-      timezone: 'Europe/Berlin'
+    commit-message:
+      prefix: chore(github-actions)
 
   - package-ecosystem: 'devcontainers'
     directory: '/'
     schedule:
       interval: 'weekly'
-      time: '08:00'
-      timezone: 'Europe/Berlin'
+    commit-message:
+      prefix: chore(devcontainers)
 
   - package-ecosystem: 'composer'
     directory: '/'
     schedule:
       interval: 'weekly'
-      time: '08:00'
-      timezone: 'Europe/Berlin'
+    commit-message:
+      prefix: chore(composer)
