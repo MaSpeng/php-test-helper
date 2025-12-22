@@ -25,6 +25,9 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Check Markdown files
-        uses: nosborn/github-action-markdown-cli@v3
+        uses: DavidAnson/markdownlint-cli2-action@v22
         with:
-          files: '. .github/*.md'
+          globs: |
+            .github/*.md
+            *.md
+            docs/*.md
