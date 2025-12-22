@@ -45,6 +45,8 @@ trait ObjectReflectorTrait
     }
 
     /**
+     * @param class-string<object> $class
+     *
      * @throws ReflectionException
      */
     public static function getProperty(string $class, string $property): ReflectionProperty
@@ -62,7 +64,7 @@ trait ObjectReflectorTrait
      */
     public static function getPropertyValue(object $object, string $property): mixed
     {
-        $class = static::getClassName($object);
+        $class = self::getClassName($object);
 
         $reflectionProperty = self::getProperty($class, $property);
 
@@ -100,6 +102,8 @@ trait ObjectReflectorTrait
     }
 
     /**
+     * @return class-string<object>
+     *
      * @throws InvalidArgumentException
      */
     private static function getClassName(object $object): string

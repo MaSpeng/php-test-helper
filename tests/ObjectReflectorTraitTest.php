@@ -40,7 +40,7 @@ final class ObjectReflectorTraitTest extends TestCase
             'protectedMethod',
         );
 
-        self::assertNull($reflectedMethod->invoke($testDouble));
+        static::assertNull($reflectedMethod->invoke($testDouble));
     }
 
     public function testInvokeMethod(): void
@@ -53,7 +53,7 @@ final class ObjectReflectorTraitTest extends TestCase
             use ObjectReflectorTrait;
         };
 
-        self::assertNull(
+        static::assertNull(
             $objectReflector::invokeMethod($testDouble, 'protectedMethod'),
         );
     }
@@ -78,7 +78,7 @@ final class ObjectReflectorTraitTest extends TestCase
             'privateProperty',
         );
 
-        self::assertSame($testDouble->getPrivatePropertyValue(), $property->getValue($testDouble));
+        static::assertSame($testDouble->getPrivatePropertyValue(), $property->getValue($testDouble));
     }
 
     public function testGetPropertyValue(): void
@@ -96,7 +96,7 @@ final class ObjectReflectorTraitTest extends TestCase
             use ObjectReflectorTrait;
         };
 
-        self::assertSame(
+        static::assertSame(
             $testDouble->getPrivatePropertyValue(),
             $objectReflector::getPropertyValue($testDouble, 'privateProperty'),
         );
@@ -119,7 +119,7 @@ final class ObjectReflectorTraitTest extends TestCase
 
         $objectReflector::setPropertyValue($testDouble, 'privateProperty', 'new private property value');
 
-        self::assertSame('new private property value', $testDouble->getPrivatePropertyValue());
+        static::assertSame('new private property value', $testDouble->getPrivatePropertyValue());
     }
 
     public function testSetPropertyValues(): void
@@ -152,8 +152,8 @@ final class ObjectReflectorTraitTest extends TestCase
             ],
         );
 
-        self::assertSame('new private property value', $testDouble->getPrivatePropertyValue());
-        self::assertSame('new another private property value', $testDouble->getAnotherPrivatePropertyValue());
+        static::assertSame('new private property value', $testDouble->getPrivatePropertyValue());
+        static::assertSame('new another private property value', $testDouble->getAnotherPrivatePropertyValue());
     }
 
     public function testGetClassName(): void
@@ -162,12 +162,12 @@ final class ObjectReflectorTraitTest extends TestCase
             use ObjectReflectorTrait;
         };
 
-        $mockClass = self::createStub(Double::class);
+        $mockClass = static::createStub(Double::class);
 
         $getClassMethod = new ReflectionMethod(ObjectReflectorTrait::class, 'getClassName');
         $getClassMethod->setAccessible(true);
 
-        self::assertSame(
+        static::assertSame(
             Double::class,
             $getClassMethod->invoke($objectReflector, $mockClass),
         );
