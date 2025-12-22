@@ -2,7 +2,7 @@
 
 This library has the target to simplify various tasks during test development.
 
-[![Minimum PHP Version](https://img.shields.io/badge/PHP-%3E%3D8.1.0-blue.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/PHP-%3E%3D8.2.0-blue.svg)](https://php.net/)
 
 ## Installation
 
