@@ -11,9 +11,7 @@ return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setRules([
         // Pre defined rule sets https://cs.symfony.com/doc/ruleSets/index.html
-        '@PER-CS2.0' => true,
-        '@PER-CS2.0:risky' => true,
-        '@PHP81Migration' => true,
+        '@auto:risky' => true,
     ])
     ->setFinder($finder)
     ->setCacheFile('var/php-cs-fixer/.php-cs-fixer.cache');
