@@ -23,7 +23,7 @@
         "docs": "https://github.com/MaSpeng/php-test-helper/blob/master/README.md"
     },
     "require": {
-        "php": "^8.1"
+        "php": "^8.2"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.64",

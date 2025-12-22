@@ -1,6 +1,6 @@
 {
   "name": "php-test-helper",
-  "image": "mcr.microsoft.com/devcontainers/php:8.1-trixie",
+  "image": "mcr.microsoft.com/devcontainers/php:8.2-trixie",
   "features": {
     "ghcr.io/devcontainers-extra/features/markdownlint-cli2:1": {},
     "ghcr.io/devcontainers-extra/features/yamllint:2": {}

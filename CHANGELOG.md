@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ## [Unreleased]
 
+### Removed
+
+- Drop support for PHP < 8.2
+
 ## [0.3.0] - 2023-12-07
 
 ### Added
