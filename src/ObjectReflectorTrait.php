@@ -24,8 +24,6 @@ trait ObjectReflectorTrait
     {
         $reflectionMethod = new ReflectionMethod($class, $method);
 
-        $reflectionMethod->setAccessible(true);
-
         return $reflectionMethod;
     }
 
@@ -52,8 +50,6 @@ trait ObjectReflectorTrait
     public static function getProperty(string $class, string $property): ReflectionProperty
     {
         $reflectionProperty = new ReflectionProperty($class, $property);
-
-        $reflectionProperty->setAccessible(true);
 
         return $reflectionProperty;
     }
